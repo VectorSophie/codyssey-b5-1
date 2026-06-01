@@ -52,43 +52,63 @@ orders  ──< order_item   주문 1 : 주문상세 N
 book    ──< order_item   도서 1 : 주문상세 N
 ```
 
-### ERD (텍스트)
+### ERD
 
-```
-genre          author
- id PK          id PK
- name UNIQUE     name
- description     nationality
-     |           birth_year
-     |               |
-     └──────┬─────────┘
-            ▼
-          book
-           id PK
-           genre_id  FK→genre.id
-           author_id FK→author.id
-           title
-           isbn  UNIQUE
-           price CHECK(>0)
-           stock
-           published_date
-               |
-               └──────────────────────┐
-                                      |
-member                                |
- id PK                           order_item
- name                             id PK
- email UNIQUE                     order_id FK→orders.id
- phone                            book_id  FK→book.id
- joined_at                        quantity CHECK(>0)
-     |                            unit_price
-     ▼
-  orders
-   id PK
-   member_id FK→member.id
-   ordered_at
-   status CHECK(pending|completed|cancelled)
-   total_amount
+```mermaid
+erDiagram
+    GENRE {
+        int id PK
+        string name UK
+        string description
+    }
+
+    AUTHOR {
+        int id PK
+        string name
+        string nationality
+        int birth_year
+    }
+
+    BOOK {
+        int id PK
+        int genre_id FK
+        int author_id FK
+        string title
+        string isbn UK
+        decimal price
+        int stock
+        date published_date
+    }
+
+    MEMBER {
+        int id PK
+        string name
+        string email UK
+        string phone
+        datetime joined_at
+    }
+
+    ORDERS {
+        int id PK
+        int member_id FK
+        datetime ordered_at
+        string status
+        decimal total_amount
+    }
+
+    ORDER_ITEM {
+        int id PK
+        int order_id FK
+        int book_id FK
+        int quantity
+        decimal unit_price
+    }
+
+    GENRE ||--o{ BOOK : categorizes
+    AUTHOR ||--o{ BOOK : writes
+    MEMBER ||--o{ ORDERS : places
+    ORDERS ||--o{ ORDER_ITEM : contains
+    BOOK ||--o{ ORDER_ITEM : included_in
 ```
 
 ### 제약조건 요약
