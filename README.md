@@ -1,4 +1,4 @@
-# b3-1 Mini Redis
+# b5-1 Mini Redis
 
 CLI 기반 Mini Redis. 해시맵/이중 연결 리스트/힙을 밑바닥부터 구현하고, 이걸 조합해
 LRU 캐시 제거와 TTL 만료를 동작시킨다. `dict`, `set`, `collections`는 코드 전체에서
@@ -34,7 +34,7 @@ python test_mini_redis.py
 ## 폴더 구조
 
 ```
-codyssey-b3-1/
+codyssey-b5-1/
 ├── main.py                     # 엔트리 포인트
 ├── test_mini_redis.py          # assert 기반 자체 테스트
 └── mini_redis/
